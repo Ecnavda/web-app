@@ -11,4 +11,5 @@ def get_quote():
 
 def get_quotes(num):
     r = requests.get(url + "/" + num)
+    # JSON function is returning a list
     return r.json()
