@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>inTech Club</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
 </head>
 <body>
     <header>
@@ -14,12 +15,16 @@
     </header>
 
     <main>
-        {% block main %}
-        {% endblock %}
+	    <h1 id="test">Ron Swanson API</h1>
+	    {% block main %}
+	    {% endblock %}
     </main>
 
     <footer>
         <p>inTech Club&copy;</p>
     </footer>
+    
+    <script type="text/javascript" src="/static/main.js">
+    </script>
 </body>
 </html>
