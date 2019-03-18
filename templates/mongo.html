@@ -3,8 +3,16 @@
 <section>
     <h2>Mongo DB Connection</h2>
 
-    <button id="db_quotes">Get Quotes From DB</button><br>
+    <div>
+	    Search for: <input type="text" name="query" /><br>
+	    <input type="checkbox" name="raw" value="yes" />Raw DB Output<br>
+	    (Leave blank to retrieve all)<br>
+	    <button id="db_quotes">Search Query</button>
+    </div>
 
+    <!--
+    <button id="db_quotes">Get Quotes From DB</button><br>
+    -->
     <div id="output"></div>
 </section>
 {% endblock %}

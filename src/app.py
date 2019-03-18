@@ -1,5 +1,4 @@
 import ron
-import db
 from pymongo import MongoClient
 from flask import Flask, render_template
 import os
@@ -10,7 +9,7 @@ TEMPLATE_PATH = os.path.join(APP_PATH, "templates/")
 # creating an instance of the Flask class using the special __name__ variable
 website = Flask(
         __name__,
-        #static_folder=STATIC_PATH,
+        # static_folder=STATIC_PATH,
         template_folder=TEMPLATE_PATH
         )
 
@@ -20,8 +19,9 @@ with open("connectionString.txt", "r") as file:
     mongoURI = file.readline()
 client = MongoClient(mongoURI)
 # The ronSwansonQuotes database is created if it doesn't exist
-collection = client.ronSwansonQuotes
-
+db = client.ronSwansonQuotes
+# The quotes collection is created if it doesn't exist
+collection = db.quotes
 
 # Flask uses function decorators to trigger functions based on URL accessed
 @website.route("/")
@@ -34,6 +34,7 @@ def mongo():
     return render_template("mongo.html")
 
 
+# URL endpoints
 @website.route("/quote")
 def quote():
     quotes = ron.get_quote()
@@ -50,5 +51,5 @@ def index_multi(num):
 
 @website.route("/mongo/get_all")
 def mongo_all():
-    results = db.get_quotes()
-    return "<p>{}</p>".format(results)
+    results = collection.find()
+    return render_template('quotes.html', quotes=results)
