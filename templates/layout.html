@@ -8,23 +8,26 @@
 <body>
     <header>
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Contact</a>
-            <a href="#">About</a>
+            <a href="{{ url_for('index') }}">Quotes</a>
+            <a href="{{ url_for('mongo') }}">Mongo DB</a>
         </nav>
     </header>
 
     <main>
-	    <h1 id="test">Ron Swanson API</h1>
+	    <h1>inTech Project</h1>
+        <hr>
 	    {% block main %}
 	    {% endblock %}
+        <hr>
     </main>
 
     <footer>
         <p>inTech Club&copy;</p>
     </footer>
-    
-    <script type="text/javascript" src="/static/main.js">
+
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.3.1.min.js') }}">
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}">
     </script>
 </body>
 </html>
