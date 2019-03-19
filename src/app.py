@@ -1,6 +1,6 @@
 import ron
 from pymongo import MongoClient
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import os
 APP_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_PATH = os.path.join(APP_PATH, "templates/")
@@ -49,7 +49,11 @@ def index_multi(num):
     return render_template("quotes.html", quotes=quotes)
 
 
-@website.route("/mongo/get_all")
+@website.route("/mongo/get_all", methods=['POST'])
 def mongo_all():
-    results = collection.find()
+    print(request)
+    if 'raw' in request.form:
+        results = collection.find()
+    else:
+        results = [x['quote'] for x in collection.find(projection={'_id': False})]
     return render_template('quotes.html', quotes=results)
