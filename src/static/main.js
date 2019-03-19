@@ -23,7 +23,6 @@ $("#quote_multi").click(
 
 $("#mongo_button").click(
     function() {
-        console.log($("#mongo_form").serialize());
         $.post("mongo/get_all", $("#mongo_form").serialize(), function(data) {
             $("#output").html(data);
             }

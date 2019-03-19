@@ -51,7 +51,6 @@ def index_multi(num):
 
 @website.route("/mongo/get_all", methods=['POST'])
 def mongo_all():
-    print(request)
     if 'raw' in request.form:
         results = collection.find()
     else:
