@@ -1,4 +1,5 @@
 import ron
+import json
 from pymongo import MongoClient
 from flask import Flask, render_template, request
 import os
@@ -35,22 +36,43 @@ def mongo():
 
 
 # URL endpoints
-@website.route("/quote")
+@website.route("/get_quote")
 def quote():
+    quote = ron.get_quote()
+    return json.dumps(quote)
+
+
+@website.route("/get_quote/<num>")
+def quotes(num):
+    quotes = ron.get_quotes(num)
+    return json.dumps(quotes)
+
+
+@website.route("/get_mongo", methods=['POST'])
+def mongo_get():
+    if 'raw' in request.form:
+        results = [doc for doc in collection.find()]
+    else:
+        results = [doc['quote'] for doc in collection.find(projection={'_id': False})]
+    return json.dumps(results)
+
+# Deprecated ---------------------------------------------------
+@website.route("/quote_html")
+def quote_html():
     quotes = ron.get_quote()
     # Passing the list of quotes to the template
     return render_template("quotes.html", quotes=quotes)
 
 
-@website.route("/quote/<num>")
-def index_multi(num):
+@website.route("/quote_html/<num>")
+def quote_multi_html(num):
     # quotes is a list
     quotes = ron.get_quotes(num)
     return render_template("quotes.html", quotes=quotes)
 
 
-@website.route("/mongo/get_all", methods=['POST'])
-def mongo_all():
+@website.route("/get_mongo_html", methods=['POST'])
+def mongo_all_html():
     if 'raw' in request.form:
         results = collection.find()
     else:
